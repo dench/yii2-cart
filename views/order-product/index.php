@@ -77,7 +77,7 @@ $this->registerJs($js);
         <label class="control-label" for="order-buyer_id"><?= Yii::t('app', 'Buyer') ?></label>
         <div>
             <?= $order->buyer->name ?>
-            <?= Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::to(['/admin/buyer/update', 'id' => $order->buyer->id]), ['target' => '_blank']) ?>
+            <?= Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::to(['/admin/cart/buyer/update', 'id' => $order->buyer->id]), ['target' => '_blank']) ?>
         </div>
     </div>
 

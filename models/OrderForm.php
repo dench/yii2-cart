@@ -33,7 +33,7 @@ class OrderForm extends Model
             [['name', 'phone', 'email', 'delivery'], 'string'],
             ['email', 'email'],
             [['entity'], 'boolean'],
-            ['reCaptcha', ReCaptchaValidator::class, 'uncheckedMessage' => Yii::t('app', 'Пожалуйста, подтвердите, что вы не бот.')],
+            ['reCaptcha', ReCaptchaValidator::class, 'skipOnEmpty' => YII_DEBUG ? true : false, 'uncheckedMessage' => Yii::t('app', 'Пожалуйста, подтвердите, что вы не бот.')],
         ];
     }
 
