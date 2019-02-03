@@ -26,6 +26,8 @@ class CartIconWidget extends Widget
     {
         $cart = Cart::getCart();
 
+        $this->registerClientScript();
+
         $options = [
             'id' => $this->id,
             'class' => 'cart-icon',
