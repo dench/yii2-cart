@@ -6,7 +6,7 @@
  * Time: 14:02
  */
 
-namespace app\widgets;
+namespace dench\cart\widgets;
 
 use dench\cart\models\Cart;
 use yii\base\Widget;
