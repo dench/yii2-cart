@@ -11,7 +11,9 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "~2.0.0"
+        "yiisoft/yii2": "~2.0.0",
+        "kartik-v/yii2-widget-typeahead": "*",
+        "dench/yii2-modal": "@dev"
     },
     "autoload": {
         "psr-4": {
