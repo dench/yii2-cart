@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
         'pluginOptions' => ['highlight' => true],
         'dataset' => [
             [
-                'prefetch' => Url::to(['/search/product-list', 'rand' => rand(100000,999999)]),
+                'prefetch' => Url::to(['product-list', 'rand' => rand(100000,999999)]),
                 'display' => 'value',
                 'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
                 'limit' => 10,

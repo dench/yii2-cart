@@ -3,9 +3,12 @@
 namespace dench\cart\controllers;
 
 use dench\cart\models\Order;
+use dench\products\models\Product;
+use dench\products\models\Variant;
 use Yii;
 use dench\cart\models\OrderProduct;
 use dench\cart\models\OrderProductSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -113,6 +116,25 @@ class OrderProductController extends Controller
         $model->delete();
 
         return $this->redirect(['index', 'order_id' => $order_id]);
+    }
+
+    public function actionProductList()
+    {
+        $data = [];
+
+        $products = Product::find()->where(['enabled' => true])->all();
+        foreach ($products as $product) {
+            $variants = Variant::find()->where(['enabled' => true])->andWhere(['product_id' => $product->id])->all();
+            foreach ($variants as $variant) {
+                $data[] = [
+                    'id' => $variant->id,
+                    'value' => $product->name . ", " . $variant->name,
+                    'price' => $variant->price,
+                ];
+            }
+        }
+
+        return Json::encode($data);
     }
 
     /**
