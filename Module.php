@@ -2,6 +2,8 @@
 
 namespace dench\cart;
 
+use Yii;
+
 /**
  * admin module definition class
  */
