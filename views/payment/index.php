@@ -1,7 +1,9 @@
 <?php
 
+use dench\sortable\grid\SortableColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,13 +21,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'rowOptions' => function ($model, $key, $index, $grid) {
+            return [
+                'data-position' => $model->position,
+            ];
+        },
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'enabled',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => SortableColumn::class,
+            ],
+            'name',
+            [
+                'attribute' => 'enabled',
+                'content' => function($model, $key, $index, $column){
+                    if ($model->enabled) {
+                        $class = 'glyphicon glyphicon-ok';
+                    } else {
+                        $class = '';
+                    }
+                    return Html::tag('i', '', ['class' => $class]);
+                },
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+            ],
+        ],
+        'options' => [
+            'data' => [
+                'sortable' => 1,
+                'sortable-url' => Url::to(['sorting']),
+            ]
         ],
     ]); ?>
 </div>

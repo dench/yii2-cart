@@ -2,6 +2,7 @@
 
 namespace dench\cart\controllers;
 
+use dench\sortable\actions\SortingAction;
 use Yii;
 use dench\cart\models\Payment;
 use yii\data\ActiveDataProvider;
@@ -29,6 +30,16 @@ class PaymentController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        return [
+            'sorting' => [
+                'class' => SortingAction::class,
+                'query' => Payment::find(),
+            ],
+        ];
+    }
+
     /**
      * Lists all Payment models.
      * @return mixed
@@ -37,23 +48,15 @@ class PaymentController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Payment::find(),
+            'sort'=> [
+                'defaultOrder' => [
+                    'position' => SORT_ASC,
+                ],
+            ],
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Payment model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 
@@ -69,7 +72,8 @@ class PaymentController extends Controller
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', Yii::t('page', 'Information has been saved successfully.'));
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -86,10 +90,11 @@ class PaymentController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelMulti($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', Yii::t('page', 'Information has been saved successfully.'));
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -125,5 +130,21 @@ class PaymentController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Finds the Payment model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Payment|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelMulti($id)
+    {
+        if (($model = Payment::find()->where(['id' => $id])->multilingual()->one()) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException(Yii::t('page', 'The requested page does not exist.'));
+        }
     }
 }

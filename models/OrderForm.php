@@ -19,7 +19,9 @@ class OrderForm extends Model
     public $name;
     public $phone;
     public $email;
+    public $delivery_id;
     public $delivery;
+    public $payment_id;
     public $entity;
     public $reCaptcha;
 
@@ -30,6 +32,7 @@ class OrderForm extends Model
     {
         return [
             [['name', 'phone'], 'required'],
+            [['delivery_id', 'payment_id'], 'integer'],
             [['name', 'phone', 'email', 'delivery'], 'string'],
             ['email', 'email'],
             [['entity'], 'boolean'],
@@ -40,8 +43,8 @@ class OrderForm extends Model
     public function scenarios()
     {
         return [
-            'admin' => ['name', 'phone', 'email', 'delivery', 'entity'],
-            'user' => ['name', 'phone', 'email', 'delivery', 'entity', 'reCaptcha'],
+            'admin' => ['name', 'phone', 'email', 'delivery_id', 'delivery', 'payment_id', 'entity'],
+            'user' => ['name', 'phone', 'email', 'delivery_id', 'delivery', 'payment_id', 'entity', 'reCaptcha'],
         ];
     }
 
@@ -54,7 +57,9 @@ class OrderForm extends Model
             'name' => 'ФИО',
             'phone' => 'Контактный телефон',
             'email' => 'Ваш E-mail',
+            'delivery_id' => 'Выберите подходящий способ доставки',
             'delivery' => 'Город для доставки',
+            'payment_id' => 'Выберите способ оплаты заказа',
             'entity' => 'Покупателем выступает',
         ];
     }

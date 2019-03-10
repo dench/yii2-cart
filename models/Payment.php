@@ -2,9 +2,12 @@
 
 namespace dench\cart\models;
 
+use dench\language\behaviors\LanguageBehavior;
+use dench\sortable\behaviors\SortableBehavior;
 use omgdef\multilingual\MultilingualQuery;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "payment".
@@ -20,6 +23,17 @@ class Payment extends ActiveRecord
     public static function tableName()
     {
         return 'payment';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            LanguageBehavior::class,
+            SortableBehavior::class,
+        ];
     }
 
     /**
@@ -55,5 +69,12 @@ class Payment extends ActiveRecord
     public static function find()
     {
         return new MultilingualQuery(get_called_class());
+    }
+
+    public static function getList($enabled = true)
+    {
+        $temp = self::find()->filterWhere(['enabled' => $enabled])->orderBy(['position' => SORT_ASC])->all();
+
+        return ArrayHelper::map($temp, 'id', 'name');
     }
 }

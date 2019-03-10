@@ -7,6 +7,7 @@ use dench\sortable\behaviors\SortableBehavior;
 use omgdef\multilingual\MultilingualQuery;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "delivery".
@@ -88,5 +89,12 @@ class Delivery extends ActiveRecord
             self::TYPE_ADDRESS => Yii::t('cart', 'Delivery address'),
             self::TYPE_DEPARTMENT => Yii::t('cart', 'Delivery department'),
         ];
+    }
+    
+    public static function getList($enabled = true)
+    {
+        $temp = self::find()->filterWhere(['enabled' => $enabled])->orderBy(['position' => SORT_ASC])->all();
+
+        return ArrayHelper::map($temp, 'id', 'name');
     }
 }
