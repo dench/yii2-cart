@@ -54,13 +54,13 @@ class OrderForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'ФИО',
-            'phone' => 'Контактный телефон',
-            'email' => 'Ваш E-mail',
-            'delivery_id' => 'Выберите подходящий способ доставки',
-            'delivery' => 'Город для доставки',
-            'payment_id' => 'Выберите способ оплаты заказа',
-            'entity' => 'Покупателем выступает',
+            'name' => Yii::t('app', 'Full Name'),
+            'phone' => Yii::t('app', 'Contact phone'),
+            'email' => Yii::t('app', 'Your E-mail'),
+            'delivery_id' => Yii::t('app', 'Choose the appropriate delivery method'),
+            'delivery' => Yii::t('app', 'Delivery address'),
+            'payment_id' => Yii::t('app', 'Select the appropriate method of payment'),
+            'entity' => Yii::t('app', 'Buyer is'),
         ];
     }
 
@@ -103,6 +103,12 @@ class OrderForm extends Model
                 }
             }
 
+            $status = Order::STATUS_NEW;
+
+            if ($this->payment_id) {
+                $status = Order::STATUS_AWAITING;
+            }
+
             $order = new Order([
                 'buyer_id' => $buyer->id,
                 'product_ids' => $product_ids,
@@ -110,6 +116,9 @@ class OrderForm extends Model
                 'phone' => $this->phone,
                 'email' => $this->email,
                 'delivery' => $this->delivery,
+                'delivery_id' => $this->delivery_id,
+                'payment_id' => $this->payment_id,
+                'status' => $status,
             ]);
 
             $order->cartItemName = $cartItemName;

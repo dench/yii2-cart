@@ -15,6 +15,9 @@ use yii\helpers\ArrayHelper;
  * @property int $id
  * @property int $type
  * @property bool $enabled
+ *
+ * @property string name
+ * @property string text
  */
 class Delivery extends ActiveRecord
 {

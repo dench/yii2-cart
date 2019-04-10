@@ -21,9 +21,14 @@ use yii\db\ActiveRecord;
  * @property string $phone
  * @property string $email
  * @property string $delivery
+ * @property int $delivery_id
+ * @property int $payment_id
  *
  * @property Buyer $buyer
  * @property Variant[] $products
+ * @property OrderProduct[] $orderProducts
+ * @property Delivery $deliveryMethod
+ * @property Payment $paymentMethod
  */
 class Order extends ActiveRecord
 {
@@ -35,6 +40,8 @@ class Order extends ActiveRecord
     const STATUS_VIEWED = 2;
     const STATUS_COMPLETED = 3;
     const STATUS_CANCELED = 4;
+    const STATUS_AWAITING = 5;
+    const STATUS_PAID = 6;
 
     public function init()
     {
@@ -95,14 +102,16 @@ class Order extends ActiveRecord
     {
         return [
             [['buyer_id', 'amount', 'product_ids', 'phone'], 'required'],
-            [['buyer_id', 'amount', 'status'], 'integer'],
+            [['buyer_id', 'amount', 'status', 'delivery_id', 'payment_id'], 'integer'],
             [['text'], 'string'],
             [['email', 'delivery'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 20],
             ['status', 'default', 'value' => self::STATUS_NEW],
-            ['status', 'in', 'range' => [self::STATUS_NEW, self::STATUS_VIEWED, self::STATUS_COMPLETED, self::STATUS_CANCELED]],
+            ['status', 'in', 'range' => [self::STATUS_NEW, self::STATUS_VIEWED, self::STATUS_COMPLETED, self::STATUS_CANCELED, self::STATUS_AWAITING, self::STATUS_PAID]],
             [['product_ids'], 'each', 'rule' => ['integer']],
             [['buyer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Buyer::class, 'targetAttribute' => ['buyer_id' => 'id']],
+            [['delivery_id'], 'exist', 'skipOnError' => true, 'targetClass' => Delivery::class, 'targetAttribute' => ['delivery_id' => 'id']],
+            [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::class, 'targetAttribute' => ['payment_id' => 'id']],
         ];
     }
 
@@ -115,12 +124,14 @@ class Order extends ActiveRecord
             'id' => 'ID',
             'buyer_id' => Yii::t('app', 'Buyer'),
             'amount' => Yii::t('app', 'Amount'),
-            'text' => Yii::t('app', 'Text'),
+            'text' => Yii::t('app', 'Comment'),
             'created_at' => Yii::t('app', 'Created'),
             'status' => Yii::t('app', 'Status'),
             'phone' => Yii::t('app', 'Phone'),
             'email' => Yii::t('app', 'E-mail'),
-            'delivery' => Yii::t('app', 'Delivery'),
+            'delivery' => Yii::t('app', 'Delivery address'),
+            'delivery_id' => Yii::t('app', 'Delivery method'),
+            'payment_id' => Yii::t('app', 'Payment method'),
         ];
     }
 
@@ -138,6 +149,30 @@ class Order extends ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Variant::class, ['id' => 'variant_id'])->viaTable('order_product', ['order_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderProducts()
+    {
+        return $this->hasMany(OrderProduct::class, ['order_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeliveryMethod()
+    {
+        return $this->hasOne(Delivery::class, ['id' => 'delivery_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPaymentMethod()
+    {
+        return $this->hasOne(Payment::class, ['id' => 'payment_id']);
     }
 
     public static function unread()
@@ -173,9 +208,11 @@ class Order extends ActiveRecord
     {
         return [
             self::STATUS_NEW => 'Новый',
-            self::STATUS_VIEWED => 'Просмотрено',
+            self::STATUS_VIEWED => 'В обработке',
             self::STATUS_COMPLETED => 'Завершено',
             self::STATUS_CANCELED => 'Отменено',
+            self::STATUS_AWAITING => 'Ожидает оплату',
+            self::STATUS_PAID => 'Оплачено',
         ];
     }
 
@@ -183,9 +220,11 @@ class Order extends ActiveRecord
     {
         return [
             self::STATUS_NEW => 'danger',
-            self::STATUS_VIEWED => 'primary',
+            self::STATUS_VIEWED => 'warning',
             self::STATUS_COMPLETED => 'success',
             self::STATUS_CANCELED => 'default',
+            self::STATUS_AWAITING => 'info',
+            self::STATUS_PAID => 'primary',
         ];
     }
 

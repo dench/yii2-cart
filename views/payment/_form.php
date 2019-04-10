@@ -25,6 +25,8 @@ use yii\widgets\ActiveForm;
     <div class="tab-content">
 
         <div class="tab-pane active" id="tab-main">
+            <?= $form->field($model, 'type')->dropDownList(Payment::typeList()) ?>
+
             <?= $form->field($model, 'enabled')->checkbox() ?>
         </div>
 

@@ -5,23 +5,19 @@ namespace dench\cart\actions;
 use dench\cart\models\Delivery;
 use Yii;
 use yii\base\Action;
-use yii\helpers\ArrayHelper;
-use yii\web\Response;
 
 class DeliveryAction extends Action
 {
-    public function runWithParams($id)
+    public function run()
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = Yii::$app->request->post('id');
 
-        $data = [];
-
-        if ($temp = Delivery::find()->where(['id' => $id])->one()) {
-            $data = ArrayHelper::toArray($temp);
-            $data['name'] = $temp->name;
-            $data['text'] = $temp->text;
+        if ($model = Delivery::findOne($id)) {
+            return $this->controller->renderAjax('delivery', [
+                'model' => $model,
+            ]);
+        } else {
+            return null;
         }
-
-        return $data;
     }
 }

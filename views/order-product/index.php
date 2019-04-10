@@ -1,6 +1,8 @@
 <?php
 
+use dench\cart\models\Delivery;
 use dench\cart\models\Order;
+use dench\cart\models\Payment;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -13,6 +15,7 @@ use yii\widgets\MaskedInput;
 /* @var $order Order */
 
 $this->title = Yii::t('app', 'Order #{order_id}', ['order_id' => $order->id]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => ['order/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $js = <<<JS
@@ -92,7 +95,11 @@ $this->registerJs($js);
 
     <?= $form->field($order, 'email')->textInput(['class' => 'form-control mw-250px']) ?>
 
+    <?= $form->field($order, 'delivery_id')->dropDownList(Delivery::getList(), ['class' => 'form-control mw-250px']) ?>
+
     <?= $form->field($order, 'delivery')->textInput() ?>
+
+    <?= $form->field($order, 'payment_id')->dropDownList(Payment::getList(), ['class' => 'form-control mw-250px']) ?>
 
     <?= $form->field($order, 'text')->textarea(['rows' => 6]) ?>
 

@@ -1,5 +1,6 @@
 <?php
 
+use dench\cart\models\Payment;
 use dench\sortable\grid\SortableColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -31,6 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => SortableColumn::class,
             ],
             'name',
+            [
+                'attribute' => 'type',
+                'content' => function(Payment $model, $key, $index, $column){
+                    $list = Payment::typeList();
+                    return @$list[$model->type];
+                },
+            ],
             [
                 'attribute' => 'enabled',
                 'content' => function($model, $key, $index, $column){
