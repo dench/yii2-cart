@@ -134,7 +134,7 @@ class OrderForm extends Model
                     ->setTextBody(Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
                     ->send();
 
-                return true;
+                return $order->id;
             }
         }
 

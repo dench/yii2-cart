@@ -42,6 +42,7 @@ class Order extends ActiveRecord
     const STATUS_CANCELED = 4;
     const STATUS_AWAITING = 5;
     const STATUS_PAID = 6;
+    const STATUS_ERROR = 7;
 
     public function init()
     {
@@ -107,7 +108,7 @@ class Order extends ActiveRecord
             [['email', 'delivery'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 20],
             ['status', 'default', 'value' => self::STATUS_NEW],
-            ['status', 'in', 'range' => [self::STATUS_NEW, self::STATUS_VIEWED, self::STATUS_COMPLETED, self::STATUS_CANCELED, self::STATUS_AWAITING, self::STATUS_PAID]],
+            ['status', 'in', 'range' => [self::STATUS_NEW, self::STATUS_VIEWED, self::STATUS_COMPLETED, self::STATUS_CANCELED, self::STATUS_AWAITING, self::STATUS_PAID, self::STATUS_ERROR]],
             [['product_ids'], 'each', 'rule' => ['integer']],
             [['buyer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Buyer::class, 'targetAttribute' => ['buyer_id' => 'id']],
             [['delivery_id'], 'exist', 'skipOnError' => true, 'targetClass' => Delivery::class, 'targetAttribute' => ['delivery_id' => 'id']],
@@ -177,16 +178,15 @@ class Order extends ActiveRecord
 
     public static function unread()
     {
-        return self::find()->where(['status' => self::STATUS_NEW])->count();
+        return self::find()->where(['status' => [self::STATUS_NEW, self::STATUS_AWAITING]])->count();
     }
 
     public static function read($id = null)
     {
-        $order = self::findOne($id);
-
-        $order->status = self::STATUS_VIEWED;
-
-        $order->save();
+        if ($order = self::findOne($id)) {
+            $order->status = self::STATUS_VIEWED;
+            $order->save();
+        }
     }
 
     public function getCartItemName()
@@ -213,6 +213,7 @@ class Order extends ActiveRecord
             self::STATUS_CANCELED => 'Отменено',
             self::STATUS_AWAITING => 'Ожидает оплату',
             self::STATUS_PAID => 'Оплачено',
+            self::STATUS_ERROR => 'Не оплачено',
         ];
     }
 
@@ -225,6 +226,7 @@ class Order extends ActiveRecord
             self::STATUS_CANCELED => 'default',
             self::STATUS_AWAITING => 'info',
             self::STATUS_PAID => 'primary',
+            self::STATUS_ERROR => 'danger',
         ];
     }
 
