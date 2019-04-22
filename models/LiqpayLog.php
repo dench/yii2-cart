@@ -46,9 +46,8 @@ class LiqpayLog extends ActiveRecord
     public function rules()
     {
         return [
-            [['time'], 'required'],
             [['time', 'order_id'], 'integer'],
-            //[['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
             [['data'], 'string'],
         ];
     }
@@ -83,7 +82,7 @@ class LiqpayLog extends ActiveRecord
 
         $model->data = print_r($data, true);
 
-        $model->order_id = intval(@$data['order_id']);
+        $model->order_id = intval($data['order_id']);
 
         $model->save();
     }
