@@ -48,7 +48,7 @@ class LiqpayLog extends ActiveRecord
         return [
             [['time'], 'required'],
             [['time', 'order_id'], 'integer'],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
+            //[['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
             [['data'], 'string'],
         ];
     }
