@@ -105,7 +105,9 @@ class OrderForm extends Model
 
             $status = Order::STATUS_NEW;
 
-            if ($this->payment_id) {
+            $awaiting = Yii::$app->params['liqpay']['status_awaiting'];
+
+            if (in_array($this->payment_id, $awaiting)) {
                 $status = Order::STATUS_AWAITING;
             }
 
