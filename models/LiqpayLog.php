@@ -3,6 +3,7 @@
 namespace dench\cart\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -23,6 +24,20 @@ class LiqpayLog extends ActiveRecord
     public static function tableName()
     {
         return 'liqpay_log';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'time',
+                'updatedAtAttribute' => false,
+            ],
+        ];
     }
 
     /**
