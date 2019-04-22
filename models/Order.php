@@ -184,8 +184,10 @@ class Order extends ActiveRecord
     public static function read($id = null)
     {
         if ($order = self::findOne($id)) {
-            $order->status = self::STATUS_VIEWED;
-            $order->save();
+            if ($order->status === Order::STATUS_NEW) {
+                $order->status = self::STATUS_VIEWED;
+                $order->save();
+            }
         }
     }
 
