@@ -97,9 +97,9 @@ class OrderForm extends Model
                 if ($item) {
                     $cartItemName[$k] = $item->product->name . ', ' . $item->name;
                     $cartItemCount[$k] = $v;
-                    $cartItemPrice[$k] = $item->price;
+                    $cartItemPrice[$k] = $item->priceDef;
                     $product_ids[] = $item->id;
-                    $amount += $v * $item->price;
+                    $amount += $v * $item->priceDef;
                 }
             }
 

@@ -54,7 +54,7 @@ class CartWidget extends Widget
             ];
             $tr[] = Html::tag('tr', implode("\n", $cols), ['class' => 'border']);
 
-            $sum += $cart[$item->id] * $item->price;
+            $sum += $cart[$item->id] * $item->priceDef;
         }
 
         $tr[] = Html::tag('tr', Html::tag('td',
