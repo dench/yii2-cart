@@ -49,7 +49,7 @@ class CartWidget extends Widget
         /** @var $item Variant */
         foreach ($items as $item) {
             $cols = [
-                Html::tag('td', Html::a($item->product->name . ', ' . $item->name, ['/product/index', 'slug' => $item->product->slug])),
+                Html::tag('td', Html::a($item->product->name . ($item->name ? ', ' . $item->name : null), ['/product/index', 'slug' => $item->product->slug])),
                 Html::tag('td', Yii::t('app', '{0} pcs', $cart[$item->id]), ['class' => 'text-right text-nowrap']),
             ];
             $tr[] = Html::tag('tr', implode("\n", $cols), ['class' => 'border']);
