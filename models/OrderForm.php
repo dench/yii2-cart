@@ -131,7 +131,8 @@ class OrderForm extends Model
                 Cart::clearCart();
 
                 Yii::$app->mailer->compose()
-                    ->setTo(Yii::$app->params['adminEmail'])
+                    ->setFrom([isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name])
+                    ->setTo(isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'])
                     ->setSubject('Заказ № ' . $order->id)
                     ->setTextBody(Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
                     ->send();
