@@ -95,7 +95,7 @@ class OrderForm extends Model
                 /** @var $item Variant */
                 $item = Variant::find()->where(['id' => $k, 'enabled' => true])->one();
                 if ($item) {
-                    $cartItemName[$k] = $item->product->name . ', ' . $item->name;
+                    $cartItemName[$k] = $item->product->name . ($item->name ? ', ' . $item->name : null);
                     $cartItemCount[$k] = $v;
                     $cartItemPrice[$k] = $item->priceDef;
                     $product_ids[] = $item->id;
