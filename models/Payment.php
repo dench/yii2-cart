@@ -14,17 +14,18 @@ use yii\helpers\ArrayHelper;
  *
  * @property int $id
  * @property bool $enabled
- *
- * @property string name
- * @property string text
+ * @property string $name
+ * @property string $text
+ * @property integer $type
  */
 class Payment extends ActiveRecord
 {
     const TYPE_UNDEFINED = 1;
     const TYPE_CASH = 2;
-    const TYPE_CARD = 3;
+    const TYPE_LIQPAY = 3;
     const TYPE_PARTS = 4;
     const TYPE_PLAN = 5;
+    const TYPE_WFP = 6;
 
     /**
      * {@inheritdoc}
@@ -53,7 +54,7 @@ class Payment extends ActiveRecord
         return [
             [['type'], 'integer'],
             [['type'], 'default', 'value' => self::TYPE_UNDEFINED],
-            [['type'], 'in', 'range' => [self::TYPE_UNDEFINED, self::TYPE_CASH, self::TYPE_CARD, self::TYPE_PARTS, self::TYPE_PLAN]],
+            [['type'], 'in', 'range' => [self::TYPE_UNDEFINED, self::TYPE_CASH, self::TYPE_LIQPAY, self::TYPE_PARTS, self::TYPE_PLAN, self::TYPE_WFP]],
             [['enabled'], 'boolean'],
             [['enabled'], 'default', 'value' => true],
             [['name'], 'string', 'max' => 255],
@@ -89,9 +90,10 @@ class Payment extends ActiveRecord
         return [
             self::TYPE_UNDEFINED => Yii::t('cart', 'Undefined'),
             self::TYPE_CASH => Yii::t('cart', 'Cash on delivery'),
-            self::TYPE_CARD => Yii::t('cart', 'Card payment'),
+            self::TYPE_LIQPAY => Yii::t('cart', 'Liqpay'),
             self::TYPE_PARTS => Yii::t('cart', 'Payment in parts'),
             self::TYPE_PLAN => Yii::t('cart', 'Installment plan'),
+            self::TYPE_WFP => Yii::t('cart', 'WayForPay'),
         ];
     }
 
