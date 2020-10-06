@@ -94,7 +94,7 @@ class WayForPay extends Component
             $handler = new ServiceUrlHandler($this->credential);
             $transaction = $handler->parseRequestFromArray($data)->getTransaction();
             $order_id = $this->getOrderId($transaction->getOrderReference());
-            WfpLog::log($order_id, $transaction->getStatus(), $data);
+            WfpLog::log($order_id, $data);
             if ($order = Order::findOne($order_id)) {
                 $order->status = $order->status !== Order::STATUS_COMPLETED ? Order::STATUS_AWAITING : Order::STATUS_COMPLETED;
                 $order->update();
