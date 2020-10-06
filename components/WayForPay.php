@@ -2,7 +2,7 @@
 
 namespace dench\cart\components;
 
-use app\models\WfpLog;
+use dench\cart\models\WfpLog;
 use dench\cart\models\Order;
 use WayForPay\SDK\Collection\ProductCollection;
 use WayForPay\SDK\Credential\AccountSecretCredential;
