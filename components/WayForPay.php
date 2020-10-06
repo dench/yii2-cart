@@ -96,10 +96,11 @@ class WayForPay extends Component
             $order_id = $this->getOrderId($transaction->getOrderReference());
             WfpLog::log($order_id, $data);
             if ($order = Order::findOne($order_id)) {
-                $order->status = $order->status !== Order::STATUS_PAID ? Order::STATUS_AWAITING : Order::STATUS_PAID;
-                $order->update();
                 if ($transaction->isStatusApproved()) {
                     $order->status = Order::STATUS_PAID;
+                    $order->update();
+                } elseif ($transaction->isStatusDeclined()) {
+                    $order->status = Order::STATUS_ERROR;
                     $order->update();
                 }
             }
