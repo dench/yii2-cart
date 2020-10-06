@@ -36,7 +36,7 @@ class WfpLog extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'yii_wfp_log';
+        return 'wfp_log';
     }
 
     /**
