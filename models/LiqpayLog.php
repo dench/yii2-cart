@@ -82,7 +82,7 @@ class LiqpayLog extends ActiveRecord
 
         $model->data = print_r($data, true);
 
-        $model->order_id = intval($data['order_id']);
+        $model->order_id = (int) $data['order_id'];
 
         $model->save();
     }

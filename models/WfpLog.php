@@ -45,7 +45,7 @@ class WfpLog extends ActiveRecord
     {
         return [
             [['order_id'], 'integer'],
-            [['order_id'], 'required'],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
             [['data'], 'string'],
         ];
     }
@@ -70,7 +70,12 @@ class WfpLog extends ActiveRecord
      */
     public static function log($order_id, $data)
     {
-        $log = (new self(['order_id' => $order_id, 'data' => json_encode($data)]));
-        $log->insert();
+        $log = new self();
+
+        $log->order_id = (int) $order_id;
+
+        $log->data = print_r($data, true);
+
+        $log->save();
     }
 }
