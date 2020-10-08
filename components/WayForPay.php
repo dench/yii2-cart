@@ -90,7 +90,12 @@ class WayForPay extends Component
     public function serviceUrl()
     {
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = file_get_contents('php://input');
+            if ($data) {
+                $data = json_decode($data, true);
+            } else {
+                return '';
+            }
             $handler = new ServiceUrlHandler($this->credential);
             $transaction = $handler->parseRequestFromArray($data)->getTransaction();
             $order_id = $this->getOrderId($transaction->getOrderReference());
@@ -121,6 +126,6 @@ class WayForPay extends Component
             return $exp[0];
         }
 
-        return (int)$orderReference;
+        return (int) $orderReference;
     }
 }

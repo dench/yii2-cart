@@ -72,10 +72,13 @@ class WfpLog extends ActiveRecord
     {
         $log = new self();
 
-        $log->order_id = (int) $order_id;
+        $log->order_id = $order_id ? (int) $order_id : null;
 
-        $log->data = print_r($data, true);
+        $log->data = $data ? print_r($data, true) : null;
 
-        $log->save();
+        if ($log->save()) {
+            $log->order_id = null;
+            $log->save();
+        }
     }
 }
