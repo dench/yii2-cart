@@ -22,6 +22,8 @@ class CartIconWidget extends Widget
 
     public $urlCart = ['/cart/index'];
 
+    public $iconOptions = ['class' => 'glyphicon glyphicon-shopping-cart'];
+
     public function run()
     {
         $cart = Cart::getCart();
@@ -47,7 +49,7 @@ class CartIconWidget extends Widget
 
         return Html::a(
             Html::tag('i', null,
-                ['class' => 'glyphicon glyphicon-shopping-cart']
+                $this->iconOptions
             ) . $count, $this->urlCart, $options);
     }
 
