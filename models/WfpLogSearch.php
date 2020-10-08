@@ -39,7 +39,7 @@ class WfpLogSearch extends WfpLog
      */
     public function search($params)
     {
-        $query = LiqpayLog::find();
+        $query = WfpLog::find();
 
         // add conditions that should always apply here
 
