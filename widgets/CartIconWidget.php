@@ -24,6 +24,8 @@ class CartIconWidget extends Widget
 
     public $iconOptions = ['class' => 'glyphicon glyphicon-shopping-cart'];
 
+    public $linkOptions = [];
+
     public function run()
     {
         $cart = Cart::getCart();
@@ -41,29 +43,35 @@ class CartIconWidget extends Widget
 
         Html::addCssClass($options, $optionsClass);
 
-        if ($count = count($cart)) {
+        $count = 0;
+
+        foreach ($cart as $c) {
+            $count += $c;
+        }
+
+        if ($count) {
             $count = '<span class="cart-count">' . $count . '</span>';
         } else {
             return Html::tag('span', null, $options);
         }
 
-        return Html::a(
+        return Html::tag('span', Html::a(
             Html::tag('i', null,
                 $this->iconOptions
-            ) . $count, $this->urlCart, $options);
+            ) . $count, $this->urlCart, $this->linkOptions), $options);
     }
 
     private function registerClientScript()
     {
-        $url = Url::to('/cart/block');
+        $url = Url::to('/cart/icon');
 
         $js = <<< JS
-function reloadCart() {
+function reloadCartIcon() {
     $.get('{$url}', function(data) {
         $('#{$this->id}').after(data).remove();
     });
 }
 JS;
-        $this->view->registerJs($js);
+        //$this->view->registerJs($js);
     }
 }

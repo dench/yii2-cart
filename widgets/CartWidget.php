@@ -38,7 +38,7 @@ class CartWidget extends Widget
 
         $a_head = Html::a(Yii::t('app', 'Items in Cart'), $this->urlCart, ['class' => 'text-white', 'data-modal' => '/cart/modal']);
 
-        $a_icon = Html::a(Html::tag('i', '', ['class' => 'fa fa-cart-arrow-down fa-2x fa-y pull-right']), $this->urlCart, ['data-modal' => '/cart/modal']);
+        $a_icon = Html::a(Html::tag('i', '', ['class' => 'fa fa-shopping-cart fa-2x fa-y pull-right']), $this->urlCart, ['data-modal' => '/cart/modal']);
 
         $cols[] = Html::tag('th', $a_head . $a_icon, ['class' => 'bg-gradient-secondary rounded-top border-0', 'colspan' => 2]);
 
@@ -93,6 +93,6 @@ function reloadCart() {
     });
 }
 JS;
-        $this->view->registerJs($js);
+        //$this->view->registerJs($js);
     }
 }
