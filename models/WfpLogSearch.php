@@ -39,12 +39,17 @@ class WfpLogSearch extends WfpLog
      */
     public function search($params)
     {
-        $query = LiqpayLog::find();
+        $query = WfpLog::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ],
+            ],
         ]);
 
         $this->load($params);
