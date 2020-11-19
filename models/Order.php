@@ -2,11 +2,13 @@
 
 namespace dench\cart\models;
 
+use dench\image\helpers\ImageHelper;
 use dench\products\models\Variant;
 use voskobovich\linker\LinkerBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "order".
@@ -134,6 +136,34 @@ class Order extends ActiveRecord
             'delivery_id' => Yii::t('app', 'Delivery method'),
             'payment_id' => Yii::t('app', 'Payment method'),
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if (isset(Yii::$app->queue)
+            && isset(Yii::$app->params['rememberReviewDelay'])
+            && !$insert
+            && isset($changedAttributes['status'])
+            && !empty($this->email)
+            && $this->status == self::STATUS_COMPLETED
+            && $changedAttributes['status'] !== self::STATUS_COMPLETED) {
+                $products = [];
+            foreach ($this->products as $product) {
+                $products[] = [
+                    'imageUrl' => $product->image ? Url::to(ImageHelper::thumb($product->image->id, 'micro'), 'https') : null,
+                    'url' => Url::to(['/product/index', 'slug' => $product->product->slug], 'https'),
+                    'name' => $this->cartItemName[$product->id],
+                    'cost' => $this->cartItemPrice[$product->id],
+                    'quantity' => $this->cartItemCount[$product->id],
+                ];
+            }
+                Yii::$app->queue->delay(Yii::$app->params['rememberReviewDelay'])->push(new \app\jobs\RememberReviewJob([
+                    'email' => $this->email,
+                    'products' => $products,
+                ]));
+        }
     }
 
     /**
