@@ -9,7 +9,7 @@
 namespace dench\cart\models;
 
 use dench\products\models\Variant;
-use himiklab\yii2\recaptcha\ReCaptchaValidator;
+use himiklab\yii2\recaptcha\ReCaptchaValidator2;
 use Yii;
 use yii\base\Model;
 use yii\helpers\Url;
@@ -36,7 +36,7 @@ class OrderForm extends Model
             [['name', 'phone', 'email', 'delivery'], 'string'],
             ['email', 'email'],
             [['entity'], 'boolean'],
-            ['reCaptcha', ReCaptchaValidator::class, 'skipOnEmpty' => YII_DEBUG ? true : false, 'uncheckedMessage' => Yii::t('app', 'Пожалуйста, подтвердите, что вы не бот.')],
+            ['reCaptcha', ReCaptchaValidator2::class, 'skipOnEmpty' => YII_DEBUG ? true : false, 'uncheckedMessage' => Yii::t('app', 'Пожалуйста, подтвердите, что вы не бот.')],
         ];
     }
 
