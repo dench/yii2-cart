@@ -62,12 +62,12 @@ class Buyer extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => Yii::t('app', 'Full Name'),
-            'phone' => Yii::t('app', 'Phone'),
-            'email' => Yii::t('app', 'E-mail'),
-            'created_at' => Yii::t('app', 'Created'),
-            'entity' => Yii::t('app', 'Entity'),
-            'delivery' => Yii::t('app', 'Delivery address'),
+            'name' => Yii::t('cart', 'Full Name'),
+            'phone' => Yii::t('cart', 'Phone'),
+            'email' => Yii::t('cart', 'E-mail'),
+            'created_at' => Yii::t('cart', 'Created'),
+            'entity' => Yii::t('cart', 'Entity'),
+            'delivery' => Yii::t('cart', 'Delivery address'),
         ];
     }
 

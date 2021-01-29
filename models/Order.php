@@ -125,16 +125,16 @@ class Order extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'buyer_id' => Yii::t('app', 'Buyer'),
-            'amount' => Yii::t('app', 'Amount'),
-            'text' => Yii::t('app', 'Comment'),
-            'created_at' => Yii::t('app', 'Created'),
-            'status' => Yii::t('app', 'Status'),
-            'phone' => Yii::t('app', 'Phone'),
-            'email' => Yii::t('app', 'E-mail'),
-            'delivery' => Yii::t('app', 'Delivery address'),
-            'delivery_id' => Yii::t('app', 'Delivery method'),
-            'payment_id' => Yii::t('app', 'Payment method'),
+            'buyer_id' => Yii::t('cart', 'Buyer'),
+            'amount' => Yii::t('cart', 'Amount'),
+            'text' => Yii::t('cart', 'Comment'),
+            'created_at' => Yii::t('cart', 'Created'),
+            'status' => Yii::t('cart', 'Status'),
+            'phone' => Yii::t('cart', 'Phone'),
+            'email' => Yii::t('cart', 'E-mail'),
+            'delivery' => Yii::t('cart', 'Delivery address'),
+            'delivery_id' => Yii::t('cart', 'Delivery method'),
+            'payment_id' => Yii::t('cart', 'Payment method'),
         ];
     }
 

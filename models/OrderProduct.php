@@ -48,11 +48,11 @@ class OrderProduct extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'order_id' => Yii::t('app', 'Order ID'),
-            'variant_id' => Yii::t('app', 'Variant ID'),
-            'name' => Yii::t('app', 'Name'),
-            'count' => Yii::t('app', 'Count'),
-            'price' => Yii::t('app', 'Price'),
+            'order_id' => 'Order ID',
+            'variant_id' => 'Variant ID',
+            'name' => Yii::t('cart', 'Name'),
+            'count' => Yii::t('cart', 'Count'),
+            'price' => Yii::t('cart', 'Price'),
         ];
     }
 

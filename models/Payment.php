@@ -69,11 +69,11 @@ class Payment extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'type' => Yii::t('app', 'Type'),
-            'enabled' => Yii::t('app', 'Enabled'),
-            'name' => Yii::t('app', 'Name'),
-            'text' => Yii::t('app', 'Text'),
+            'id' => 'ID',
+            'type' => 'Тип',
+            'enabled' => 'Включено',
+            'name' => Yii::t('cart', 'Name'),
+            'text' => Yii::t('cart', 'Text'),
         ];
     }
 

@@ -36,7 +36,7 @@ class OrderForm extends Model
             [['name', 'phone', 'email', 'delivery'], 'string'],
             ['email', 'email'],
             [['entity'], 'boolean'],
-            ['reCaptcha', ReCaptchaValidator2::class, 'skipOnEmpty' => YII_DEBUG ? true : false, 'uncheckedMessage' => Yii::t('app', 'Пожалуйста, подтвердите, что вы не бот.')],
+            ['reCaptcha', ReCaptchaValidator2::class, 'skipOnEmpty' => YII_DEBUG ? true : false, 'uncheckedMessage' => Yii::t('cart', 'Please confirm that you are not a bot.')],
         ];
     }
 
@@ -54,13 +54,13 @@ class OrderForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('app', 'Full Name'),
-            'phone' => Yii::t('app', 'Contact phone'),
-            'email' => Yii::t('app', 'Your E-mail'),
-            'delivery_id' => Yii::t('app', 'Choose the appropriate delivery method'),
-            'delivery' => Yii::t('app', 'Delivery address'),
-            'payment_id' => Yii::t('app', 'Select the appropriate method of payment'),
-            'entity' => Yii::t('app', 'Buyer is'),
+            'name' => Yii::t('cart', 'Full Name'),
+            'phone' => Yii::t('cart', 'Contact phone'),
+            'email' => Yii::t('cart', 'Your E-mail'),
+            'delivery_id' => Yii::t('cart', 'Choose the appropriate delivery method'),
+            'delivery' => Yii::t('cart', 'Delivery address'),
+            'payment_id' => Yii::t('cart', 'Select the appropriate method of payment'),
+            'entity' => Yii::t('cart', 'Buyer is'),
         ];
     }
 

@@ -58,10 +58,10 @@ class LiqpayLog extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'time' => Yii::t('app', 'Time'),
-            'order_id' => Yii::t('app', 'Order ID'),
-            'data' => Yii::t('app', 'Data'),
+            'id' => 'ID',
+            'time' => 'Время',
+            'order_id' => 'Order ID',
+            'data' => 'Data',
         ];
     }
 

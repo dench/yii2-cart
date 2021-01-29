@@ -10,22 +10,22 @@ use yii\widgets\MaskedInput;
 ?>
 
 <div class="order-form">
-<div class="alert alert-danger">Не работает</div>
+<div class="alert alert-danger"><?= Yii::t('app', 'Не работает') ?></div>
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['placeholder' => 'Фамилия Имя Отчество']) ?>
+    <?= $form->field($model, 'name')->textInput(['placeholder' => Yii::t('app', 'Фамилия Имя Отчество')]) ?>
 
     <?= $form->field($model, 'phone')->widget(MaskedInput::class, [
         'mask' => '+99 (999) 999-99-99',
     ]) ?>
 
-    <?= $form->field($model, 'delivery')->textInput(['placeholder' => 'Введите город и номер отделения Новой почты']) ?>
+    <?= $form->field($model, 'delivery')->textInput(['placeholder' => Yii::t('app', 'Введите город и номер отделения Новой почты')]) ?>
 
     <?= $form->field($model, 'email')->textInput() ?>
 
     <?= $form->field($model, 'entity')->radioList([
-        0 => 'Частное лицо ',
-        1 => 'Организация',
+        0 => Yii::t('app', 'Частное лицо'),
+        1 => Yii::t('app', 'Организация'),
     ], ['class' => 'pt-2']) ?>
 
     <div class="form-group">

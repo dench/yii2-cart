@@ -58,7 +58,7 @@ class WfpLog extends ActiveRecord
         return [
             'id' => 'ID',
             'order_id' => 'Order ID',
-            'time' => 'Time',
+            'time' => 'Время',
             'data' => 'Data',
         ];
     }

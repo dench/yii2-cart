@@ -36,7 +36,7 @@ class CartWidget extends Widget
 
         $this->registerClientScript();
 
-        $a_head = Html::a(Yii::t('app', 'Items in Cart'), $this->urlCart, ['class' => 'text-white', 'data-modal' => '/cart/modal']);
+        $a_head = Html::a(Yii::t('cart', 'Items in Cart'), $this->urlCart, ['class' => 'text-white', 'data-modal' => '/cart/modal']);
 
         $a_icon = Html::a(Html::tag('i', '', ['class' => 'fa fa-shopping-cart fa-2x fa-y pull-right']), $this->urlCart, ['data-modal' => '/cart/modal']);
 
@@ -50,7 +50,7 @@ class CartWidget extends Widget
         foreach ($items as $item) {
             $cols = [
                 Html::tag('td', Html::a($item->product->name . ($item->name ? ', ' . $item->name : null), ['/product/index', 'slug' => $item->product->slug])),
-                Html::tag('td', Yii::t('app', '{0} pcs', $cart[$item->id]), ['class' => 'text-right text-nowrap']),
+                Html::tag('td', Yii::t('cart', '{0} pcs', $cart[$item->id]), ['class' => 'text-right text-nowrap']),
             ];
             $tr[] = Html::tag('tr', implode("\n", $cols), ['class' => 'border']);
 
@@ -58,8 +58,8 @@ class CartWidget extends Widget
         }
 
         $tr[] = Html::tag('tr', Html::tag('td',
-            '<b>' . Yii::t('app', 'Amount: {0} grn', $sum) . '</b>'
-            . Html::a(Yii::t('app', 'Place an order'), ['/cart/index'], ['class' => 'btn btn-warning btn-block btn-lg mt-3']),
+            '<b>' . Yii::t('cart', 'Amount: {0} grn', $sum) . '</b>'
+            . Html::a(Yii::t('cart', 'Place an order'), ['/cart/index'], ['class' => 'btn btn-warning btn-block btn-lg mt-3']),
             [
                 'class' => 'border',
                 'colspan' => 2,
