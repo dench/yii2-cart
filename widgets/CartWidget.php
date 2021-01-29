@@ -36,9 +36,9 @@ class CartWidget extends Widget
 
         $this->registerClientScript();
 
-        $a_head = Html::a(Yii::t('cart', 'Items in Cart'), $this->urlCart, ['class' => 'text-white', 'data-modal' => '/cart/modal']);
+        $a_head = Html::a(Yii::t('cart', 'Items in Cart'), $this->urlCart, ['class' => 'text-white', 'data-modal' => Url::to(['/cart/modal'])]);
 
-        $a_icon = Html::a(Html::tag('i', '', ['class' => 'fa fa-shopping-cart fa-2x fa-y pull-right']), $this->urlCart, ['data-modal' => '/cart/modal']);
+        $a_icon = Html::a(Html::tag('i', '', ['class' => 'fa fa-shopping-cart fa-2x fa-y pull-right']), $this->urlCart, ['data-modal' => Url::to(['/cart/modal'])]);
 
         $cols[] = Html::tag('th', $a_head . $a_icon, ['class' => 'bg-gradient-secondary rounded-top border-0', 'colspan' => 2]);
 
