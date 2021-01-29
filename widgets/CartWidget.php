@@ -59,7 +59,7 @@ class CartWidget extends Widget
 
         $tr[] = Html::tag('tr', Html::tag('td',
             '<b>' . Yii::t('cart', 'Amount: {0} grn', $sum) . '</b>'
-            . Html::a(Yii::t('cart', 'Place an order'), ['/cart/index'], ['class' => 'btn btn-warning btn-block btn-lg mt-3']),
+            . Html::a(Yii::t('cart', 'Place an order'), ['/cart/index'], ['class' => 'btn btn-warning btn-block btn-lg mt-3 px-1']),
             [
                 'class' => 'border',
                 'colspan' => 2,
@@ -84,7 +84,7 @@ class CartWidget extends Widget
 
     private function registerClientScript()
     {
-        $url = Url::to('/cart/block');
+        $url = Url::to(['/cart/block']);
 
         $js = <<< JS
 function reloadCart() {

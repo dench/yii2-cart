@@ -63,7 +63,7 @@ class CartIconWidget extends Widget
 
     private function registerClientScript()
     {
-        $url = Url::to('/cart/icon');
+        $url = Url::to(['/cart/icon']);
 
         $js = <<< JS
 function reloadCartIcon() {
