@@ -77,9 +77,9 @@ $this->registerJs($js);
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="form-group field-order-buyer_id required">
-        <label class="control-label" for="order-buyer_id"><?= Yii::t('app', 'Buyer') ?></label>
+        <label class="control-label" for="order-buyer_id"><?= Yii::t('cart', 'Buyer') ?></label>
         <div>
-            <?= $order->buyer->name ?>
+            <?= $order->buyer->name ?> (<?= $order->buyer->entity ? Yii::t('app', 'Организация') : Yii::t('app', 'Частное лицо') ?>)
             <?= Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::to(['/admin/cart/buyer/update', 'id' => $order->buyer->id]), ['target' => '_blank']) ?>
         </div>
     </div>
