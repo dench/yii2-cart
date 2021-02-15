@@ -11,7 +11,7 @@ return [
     'Contact phone' => 'Контактний телефон',
     'Count' => 'Кількість',
     'Created' => 'Створено',
-    'Delivery address' => 'Доставка по адресою',
+    'Delivery address' => 'Доставка за адресою',
     'Delivery department' => 'Доставка в відділення',
     'Delivery method' => 'Спосіб доставки',
     'E-mail' => 'E-mail',
