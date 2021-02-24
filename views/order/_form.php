@@ -28,6 +28,8 @@ use yii\widgets\MaskedInput;
         1 => Yii::t('app', 'Организация'),
     ], ['class' => 'pt-2']) ?>
 
+    <?= $form->field($model, 'comment')->textarea() ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

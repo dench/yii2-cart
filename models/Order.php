@@ -25,6 +25,7 @@ use yii\helpers\Url;
  * @property string $delivery
  * @property int $delivery_id
  * @property int $payment_id
+ * @property string $comment
  *
  * @property Buyer $buyer
  * @property Variant[] $products
@@ -127,7 +128,7 @@ class Order extends ActiveRecord
             'id' => 'ID',
             'buyer_id' => Yii::t('cart', 'Buyer'),
             'amount' => Yii::t('cart', 'Amount'),
-            'text' => Yii::t('cart', 'Comment'),
+            'text' => Yii::t('cart', 'Manager\'s comment'),
             'created_at' => Yii::t('cart', 'Created'),
             'status' => Yii::t('cart', 'Status'),
             'phone' => Yii::t('cart', 'Phone'),
@@ -135,6 +136,7 @@ class Order extends ActiveRecord
             'delivery' => Yii::t('cart', 'Delivery address'),
             'delivery_id' => Yii::t('cart', 'Delivery method'),
             'payment_id' => Yii::t('cart', 'Payment method'),
+            'comment' => Yii::t('cart', 'Comments to the order'),
         ];
     }
 

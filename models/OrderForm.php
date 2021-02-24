@@ -24,6 +24,7 @@ class OrderForm extends Model
     public $payment_id;
     public $entity;
     public $reCaptcha;
+    public $comment;
 
     /**
      * @inheritdoc
@@ -33,7 +34,7 @@ class OrderForm extends Model
         return [
             [['name', 'phone'], 'required'],
             [['delivery_id', 'payment_id'], 'integer'],
-            [['name', 'phone', 'email', 'delivery'], 'string'],
+            [['name', 'phone', 'email', 'delivery', 'comment'], 'string'],
             ['email', 'email'],
             [['entity'], 'boolean'],
             ['reCaptcha', ReCaptchaValidator2::class, 'skipOnEmpty' => YII_DEBUG ? true : false, 'uncheckedMessage' => Yii::t('cart', 'Please confirm that you are not a bot.')],
@@ -43,8 +44,8 @@ class OrderForm extends Model
     public function scenarios()
     {
         return [
-            'admin' => ['name', 'phone', 'email', 'delivery_id', 'delivery', 'payment_id', 'entity'],
-            'user' => ['name', 'phone', 'email', 'delivery_id', 'delivery', 'payment_id', 'entity', 'reCaptcha'],
+            'admin' => ['name', 'phone', 'email', 'delivery_id', 'delivery', 'payment_id', 'entity', 'comment'],
+            'user' => ['name', 'phone', 'email', 'delivery_id', 'delivery', 'payment_id', 'entity', 'comment', 'reCaptcha'],
         ];
     }
 
@@ -61,6 +62,7 @@ class OrderForm extends Model
             'delivery' => Yii::t('cart', 'Delivery address'),
             'payment_id' => Yii::t('cart', 'Select the appropriate method of payment'),
             'entity' => Yii::t('cart', 'Buyer is'),
+            'comment' => Yii::t('cart', 'Comments to the order'),
         ];
     }
 
@@ -121,6 +123,7 @@ class OrderForm extends Model
                 'delivery_id' => $this->delivery_id,
                 'payment_id' => $this->payment_id,
                 'status' => $status,
+                'comment' => $this->comment,
             ]);
 
             $order->cartItemName = $cartItemName;

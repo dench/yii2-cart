@@ -101,7 +101,18 @@ $this->registerJs($js);
 
     <?= $form->field($order, 'payment_id')->dropDownList(Payment::getList(), ['class' => 'form-control mw-250px']) ?>
 
-    <?= $form->field($order, 'text')->textarea(['rows' => 6]) ?>
+    <div class="form-group">
+        <label class="control-label"><?= $order->getAttributeLabel('comment') ?></label>
+        <div>
+            <?php if (empty($order->comment)): ?>
+                <span class="text-muted">-</span>
+            <?php else: ?>
+                <span class="text-danger"><?= $order->comment ?></span>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <?= $form->field($order, 'text')->textarea(['rows' => 6, 'placeholder' => Yii::t('cart', 'Only visible to managers')]) ?>
 
     <?= $form->field($order, 'status')->dropDownList(Order::statusList(), ['class' => 'form-control mw-250px']) ?>
 
