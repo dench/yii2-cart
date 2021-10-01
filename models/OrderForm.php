@@ -9,6 +9,7 @@
 namespace dench\cart\models;
 
 use dench\products\models\Variant;
+use Exception;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use Yii;
 use yii\base\Model;
@@ -130,11 +131,21 @@ class OrderForm extends Model
             if ($order->save()) {
                 Cart::clearCart();
 
-                Yii::$app->mailer->compose()
-                    ->setTo(Yii::$app->params['adminEmail'])
-                    ->setSubject('Заказ № ' . $order->id)
-                    ->setTextBody(Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
-                    ->send();
+                try {
+                    Yii::$app->mailer->compose()
+                        ->setFrom([isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name])
+                        ->setTo(isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'])
+                        ->setSubject('Заказ № ' . $order->id)
+                        ->setTextBody(Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
+                        ->send();
+                } catch (Exception $e) {
+                    Yii::$app->mailer2->compose()
+                        ->setFrom([isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name])
+                        ->setTo(isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'])
+                        ->setSubject('Ошибка отправки почты. ' . 'Заказ № ' . $order->id)
+                        ->setTextBody('Ошибка отправки почты, сообщите разработчику. ' . Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
+                        ->send();
+                }
 
                 return $order->id;
             }
