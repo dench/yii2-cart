@@ -132,18 +132,24 @@ class OrderForm extends Model
                 Cart::clearCart();
 
                 try {
-                    Yii::$app->mailer->compose()
+                    Yii::$app->mailer->compose('new_order', [
+                        'order' => $order,
+                        'url' => Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'),
+                        'error' => false,
+                    ])
                         ->setFrom([isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name])
                         ->setTo(isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'])
                         ->setSubject('Заказ № ' . $order->id)
-                        ->setTextBody(Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
                         ->send();
                 } catch (Exception $e) {
-                    Yii::$app->mailer2->compose()
+                    Yii::$app->mailer2->compose('new_order', [
+                        'order' => $order,
+                        'url' => Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'),
+                        'error' => true,
+                    ])
                         ->setFrom([isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name])
                         ->setTo(isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'])
                         ->setSubject('Ошибка отправки почты. ' . 'Заказ № ' . $order->id)
-                        ->setTextBody('Ошибка отправки почты, сообщите разработчику. ' . Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
                         ->send();
                 }
 
