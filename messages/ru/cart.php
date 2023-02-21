@@ -11,4 +11,12 @@ return [
     'Card payment' => 'Оплата картой',
     'Payment in parts' => 'Оплата частями',
     'Installment plan' => 'Рассрочка',
+
+    'New' => 'Новый',
+    'Processing' => 'В обработке',
+    'Completed' => 'Завершено',
+    'Cancelled' => 'Отменено',
+    'Awaiting payment' => 'Ожидает оплату',
+    'Paid' => 'Оплачено',
+    'Not paid' => 'Не оплачено',
 ];
