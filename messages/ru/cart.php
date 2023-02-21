@@ -39,4 +39,11 @@ return [
     'WayForPay' => 'WayForPay',
     'Your E-mail' => 'Ваш E-mail',
     '{0} pcs' => '{0} шт',
+    'New' => 'Новый',
+    'Processing' => 'В обработке',
+    'Completed' => 'Завершено',
+    'Cancelled' => 'Отменено',
+    'Awaiting payment' => 'Ожидает оплату',
+    'Paid' => 'Оплачено',
+    'Not paid' => 'Не оплачено',
 ];

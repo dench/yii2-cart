@@ -241,13 +241,13 @@ class Order extends ActiveRecord
     public static function statusList()
     {
         return [
-            self::STATUS_NEW => 'Новый',
-            self::STATUS_VIEWED => 'В обработке',
-            self::STATUS_COMPLETED => 'Завершено',
-            self::STATUS_CANCELED => 'Отменено',
-            self::STATUS_AWAITING => 'Ожидает оплату',
-            self::STATUS_PAID => 'Оплачено',
-            self::STATUS_ERROR => 'Не оплачено',
+            self::STATUS_NEW => Yii::t('cart', 'New'),
+            self::STATUS_VIEWED => Yii::t('cart', 'Processing'),
+            self::STATUS_COMPLETED => Yii::t('cart', 'Completed'),
+            self::STATUS_CANCELED => Yii::t('cart', 'Cancelled'),
+            self::STATUS_AWAITING => Yii::t('cart', 'Awaiting payment'),
+            self::STATUS_PAID => Yii::t('cart', 'Paid'),
+            self::STATUS_ERROR => Yii::t('cart', 'Not paid'),
         ];
     }
 
