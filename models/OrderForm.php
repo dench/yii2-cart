@@ -9,7 +9,6 @@
 namespace dench\cart\models;
 
 use dench\products\models\Variant;
-use Exception;
 use himiklab\yii2\recaptcha\ReCaptchaValidator2;
 use Yii;
 use yii\base\Model;
@@ -134,21 +133,12 @@ class OrderForm extends Model
             if ($order->save()) {
                 Cart::clearCart();
 
-                try {
-                    Yii::$app->mailer->compose()
-                        ->setFrom([isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name])
-                        ->setTo(isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'])
-                        ->setSubject('Заказ № ' . $order->id)
-                        ->setTextBody(Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
-                        ->send();
-                } catch (Exception $e) {
-                    Yii::$app->mailer2->compose()
-                        ->setFrom([isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name])
-                        ->setTo(isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'])
-                        ->setSubject('Ошибка отправки почты. ' . 'Заказ № ' . $order->id)
-                        ->setTextBody('Ошибка отправки почты, сообщите разработчику. ' . Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'))
-                        ->send();
-                }
+                Yii::$app->queue->push(new \dench\cart\jobs\EmailJob([
+                    'emailFrom' => [isset(Yii::$app->params['fromEmail']) ? Yii::$app->params['fromEmail'] : Yii::$app->params['adminEmail'] => Yii::$app->name],
+                    'emailTo' => isset(Yii::$app->params['toEmail']) ? Yii::$app->params['toEmail'] : Yii::$app->params['adminEmail'],
+                    'subject' => 'Заказ № ' . $order->id,
+                    'body' => Url::to(['/admin/cart/order-product', 'order_id' => $order->id], 'https'),
+                ]));
 
                 return $order->id;
             }
