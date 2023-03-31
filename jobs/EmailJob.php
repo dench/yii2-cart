@@ -23,6 +23,7 @@ class EmailJob extends BaseObject implements JobInterface
                 ->setTextBody($this->body)
                 ->send();
         } catch (Exception $e) {
+            Yii::error('Ошибка отправки почты. ' . $this->subject);
             Yii::$app->mailer2->compose()
                 ->setFrom($this->emailFrom)
                 ->setTo($this->emailTo)
